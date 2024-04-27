@@ -1,5 +1,6 @@
 package com.example.financing;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -33,6 +34,20 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+//        创建弹窗
+        AlertDialog alertDialog1 = new AlertDialog.Builder(this)
+                .setTitle("报错")//标题
+                .setMessage("输入内容非法")//内容
+                .setIcon(R.mipmap.ic_launcher)//图标
+                .create();
+//        弹窗2
+        AlertDialog alertDialog2 = new AlertDialog.Builder(this)
+                .setTitle("报错")//标题
+                .setMessage("输入不能为空")//内容
+                .setIcon(R.mipmap.ic_launcher)//图标
+                .create();
+
+
 
 
 //        获取按钮
@@ -59,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (editTextContent.isEmpty()){
                     Log.d("TAG","报错:输入为空");
+                    alertDialog2.show();
 
                 }else {
                     // 使用正则表达式检查输入是否只包含数字和小数点
@@ -115,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         Log.d("TAG", "报错: 输入包含非法字符");
 //                        目前存在很多代码复用问题，之后写成工具类然后方便调用保持整洁和高效
+
+//                        弹窗
+                        alertDialog1.show();
 
 
                         // 清空文本框内容
