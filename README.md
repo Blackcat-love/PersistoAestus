@@ -19,7 +19,7 @@
 https://github.com/RomainPiel/Titanic
 
 ## Bug
-1.0.0 打包APK后，实际测试中，无法正常使用ScrollView滚动条，但在模拟测试中却可以。 待解决<br/>
+1.0.0 打包APK后，实际测试中，无法正常使用ScrollView滚动条，但在模拟测试中却可以。 已解决：但啥都没干，再次运行的时候莫名其妙好了（流汗黄豆）<br/>
 1.0.1 代码结构太乱。 待解决<br/>
 
 

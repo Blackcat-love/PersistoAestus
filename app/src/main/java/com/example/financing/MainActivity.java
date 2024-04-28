@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
 //        创建报错弹窗
         AlertDialog alertDialog1 = new AlertDialog.Builder(this)
                 .setTitle("报错")//标题

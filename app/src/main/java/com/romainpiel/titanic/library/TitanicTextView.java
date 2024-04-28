@@ -8,10 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.example.financing.R;
+import com.example.financing.TextViewLain;
 
 /**
  * Titanic
@@ -60,6 +62,9 @@ public class TitanicTextView extends TextView {
 
     private void init() {
         shaderMatrix = new Matrix();
+        // 设置TitanicTextView为获取焦点状态
+        setFocusable(true);
+        setFocusableInTouchMode(true);
     }
 
     public AnimationSetupCallback getAnimationSetupCallback() {
@@ -177,4 +182,33 @@ public class TitanicTextView extends TextView {
 
         super.onDraw(canvas);
     }
+
+
+//    定时关闭组件
+    @Override
+    protected void onAttachedToWindow() {
+
+        super.onAttachedToWindow();
+        // 在5秒后执行关闭或隐藏操作
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 在这里添加关闭或隐藏组件的代码
+                // 如果要隐藏组件，可以使用setVisibility(View.GONE);
+                // 如果要关闭组件，可以使用setVisibility(View.INVISIBLE); 或者从父布局中移除组件
+                // 例如：getParent().removeView(TextViewLain.this);
+                // 这里仅提供示例代码，请根据您的需求进行相应修改
+//                暂时取消隐藏组件，需要解封下面一行的代码就可以
+//                TitanicTextView.this.setVisibility(GONE);
+            }
+//            10s后正好一次循环完成，不会继续显示
+        }, 10000); // 5000毫秒 = 5秒
+    }
+
+    //    重写
+    @Override
+    public boolean isFocused() {
+        return true;
+    }
+
 }

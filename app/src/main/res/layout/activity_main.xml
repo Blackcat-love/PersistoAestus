@@ -7,59 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <LinearLayout
-        android:id="@+id/titanic_Layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"
-        android:background="#ffffff"
-        tools:ignore="MissingConstraints">
-
-        <com.romainpiel.titanic.library.TitanicTextView
-            android:id="@+id/titanic_tv"
-            android:text="@string/loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#212121"
-            android:textSize="70sp"
-            android:textStyle="italic"
-            tools:ignore="MissingConstraints" />
-
-    </LinearLayout>
-
-    <com.example.financing.TextViewLain
-        android:id="@+id/tv_one"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#3488B5"
-        android:ellipsize="marquee"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
-        android:text="@string/lain"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:paddingTop="80dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:hint="输入金额"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_one" />
-
+        tools:ignore="MissingConstraints" />
     <Button
         android:id="@+id/btn_sum"
         android:layout_width="100dp"
@@ -72,7 +31,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edit_text" />
-
     <TextView
         android:id="@+id/text_num"
         android:layout_width="0dp"
@@ -84,7 +42,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_sum" />
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -92,7 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_num">
-
         <LinearLayout
             android:id="@+id/main_line"
             android:layout_width="match_parent"
@@ -100,14 +56,24 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="0dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="添加数据" />
-
             <!-- Add more views here if needed -->
         </LinearLayout>
     </ScrollView>
-
+    <com.romainpiel.titanic.library.TitanicTextView
+        android:id="@+id/titanic_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#1AAC96"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
