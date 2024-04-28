@@ -13,6 +13,7 @@
 
 1.0.0 基础记账 实现了添加数据自动计算和保存记账记录 <br/>
 1.0.1 详细记账 添加时显示时间和分类 <br/>
+1.0.2 美观的加载画面 Titanic for Android  <br/>
 
 ### 鸣谢
 https://github.com/RomainPiel/Titanic

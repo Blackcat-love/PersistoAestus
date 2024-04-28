@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/titanic_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        tools:ignore="MissingConstraints">
+
+        <com.romainpiel.titanic.library.TitanicTextView
+            android:id="@+id/titanic_tv"
+            android:text="@string/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#212121"
+            android:textSize="70sp"
+            android:textStyle="italic"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
 
     <com.example.financing.TextViewLain
         android:id="@+id/tv_one"
@@ -87,14 +109,5 @@
             <!-- Add more views here if needed -->
         </LinearLayout>
     </ScrollView>
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:text="@string/app_v"-->
-<!--        android:textSize="20dp"-->
-<!--        android:textColor="#FF0000"-->
-<!--        >-->
-
-<!--    </TextView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
