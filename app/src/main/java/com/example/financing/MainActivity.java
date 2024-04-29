@@ -1,6 +1,7 @@
 package com.example.financing;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,10 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.romainpiel.titanic.library.Titanic;
 import com.romainpiel.titanic.library.TitanicTextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -29,13 +28,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-//        创建报错弹窗
+//        创建弹窗
         AlertDialog alertDialog1 = new AlertDialog.Builder(this)
                 .setTitle("报错")//标题
                 .setMessage("输入内容非法")//内容
                 .setIcon(R.mipmap.ic_launcher)//图标
                 .create();
-//        创建报错弹窗2
         AlertDialog alertDialog2 = new AlertDialog.Builder(this)
                 .setTitle("报错")//标题
                 .setMessage("输入不能为空")//内容
@@ -50,15 +48,25 @@ public class MainActivity extends AppCompatActivity {
         TextView text_num = findViewById(R.id.text_num);
 //        获取浮动文字
         TitanicTextView titanicTextView = findViewById(R.id.titanic_tv);
-
-
+//        获取SharedPreferences对象
+        SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
+//        获取SharedPreferences的编辑对象
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+//      使用浮动文字
         Titanic titanic = new Titanic();
         titanicTextView.setTypeface(Typefaces.get(this,"Satisfy-Regular.ttf"));
         titanic.start(titanicTextView);
 
+        //        测试
+        //                        defValue在读取失败的情况下返回
+        String text = sharedPreferences.getString("text", "default");
+        Log.e("TAG",text);
+
+
         btn_sum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // 在按钮点击事件中执行你想要的操作
                 // 获取文本框中的内容
                 String editTextContent = edit_text.getText().toString();
@@ -66,23 +74,31 @@ public class MainActivity extends AppCompatActivity {
                 String textViewContent = text_num.getText().toString();
                 // 获取要添加的组件的容器
                 LinearLayout container = findViewById(R.id.main_line);
+
                 if (editTextContent.isEmpty()){
+
                     Log.d("TAG","报错:输入为空");
                     alertDialog2.show();
+
                 }else {
+
                     // 使用正则表达式检查输入是否只包含数字和小数点
                     if (editTextContent.matches("[0-9.]+")) {
                         // 将字符串转换为 double 类型
                         double editTextValue = 0;
+
                         try {
                             editTextValue = Double.parseDouble(editTextContent);
                             // 在这里处理转换成功的情况
+
+
                         } catch (NumberFormatException e) {
                             // 在这里处理转换失败的情况，即输入不是有效的数字或小数
                             Log.d("TAG", "报错:输入不是有效的数字或小数");
                         }
-                        double textViewValue = Double.parseDouble(textViewContent);
 
+//                        转换为小数
+                        double textViewValue = Double.parseDouble(textViewContent);
                         // 计算总和
                         double sum = editTextValue + textViewValue;
 
@@ -105,9 +121,18 @@ public class MainActivity extends AppCompatActivity {
                         edit_text.setText("");
 
                         TextView textView = new TextView(MainActivity.this);
-
+//                        保存数据
+                        editor.putString("text",editTextContent);
+                        editor.apply();
+//                        调用数据
+//                        BUG:读取失败
+                        //        测试
+                        //                        defValue在读取失败的情况下返回
+                        String text = sharedPreferences.getString("text", "default");
+                        Log.e("TAG",text);
                         // 设置点击按钮后要添加的内容
-                        textView.setText(String.format("%s   %s", editTextContent, sort));
+//                        textView.setText(String.format("%s   %s", editTextContent, sort));
+                        textView.setText(text);
                         textView.setTextSize(30);
                         container.addView(textView);
                         // 创建一个新的 TextView 来显示额外的数据（时间日期）
