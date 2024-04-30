@@ -33,7 +33,7 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        被创建时，所以只会调用一次s
+//        被创建时，所以只会调用一次
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add);
@@ -42,16 +42,13 @@ public class AddActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-//        Hello Lain
-
-
 //        创建弹窗
-        AlertDialog alertDialog1 = new AlertDialog.Builder(this)
+        AlertDialog error_rule = new AlertDialog.Builder(this)
                 .setTitle("报错")//标题
                 .setMessage("输入内容非法")//内容
                 .setIcon(R.mipmap.ic_launcher)//图标
                 .create();
-        AlertDialog alertDialog2 = new AlertDialog.Builder(this)
+        AlertDialog error_null = new AlertDialog.Builder(this)
                 .setTitle("报错")//标题
                 .setMessage("输入不能为空")//内容
                 .setIcon(R.mipmap.ic_launcher)//图标
@@ -59,6 +56,8 @@ public class AddActivity extends AppCompatActivity {
 
 //        获取按钮
         Button btn_sum = findViewById(R.id.btn_sum);
+//        clr测试用
+        Button btn_clr = findViewById(R.id.btn_clr);
 //        获取文本框内容
         EditText edit_text = findViewById(R.id.edit_text);
 //        获取保存的数据
@@ -70,131 +69,44 @@ public class AddActivity extends AppCompatActivity {
         titanicTextView.setTypeface(Typefaces.get(this,"Satisfy-Regular.ttf"));
         titanic.start(titanicTextView);
 
+        text_num.setText(String.valueOf(calculateMapSum()));
+        Log.e("总和",String.valueOf(calculateMapSum()));
 
-//        读取数据添加到容器里
-        SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
-        //        获取SharedPreferences的编辑对象
-        Map<String, String> dataMap = parseStringToMap(sharedPreferences.getAll().toString());
-//                        DataMap只输出了Values
-        System.out.println(dataMap.values() + "size:" + dataMap.size());
-
-        // 获取要添加的组件的容器
-        LinearLayout container = findViewById(R.id.main_line);
-        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-//            创建TextView
-            TextView textView = new TextView(AddActivity.this);
-            textView.setText(entry.getValue());
-            textView.setTextSize(30);
-            container.addView(textView);
-        }
-
-
-
-
-
-
-
+        ShowContainer();
         btn_sum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // 在按钮点击事件中执行你想要的操作
                 // 获取文本框中的内容
                 String editTextContent = edit_text.getText().toString();
-                // 获取 TextView 中的文本
-                String textViewContent = text_num.getText().toString();
-                // 获取要添加的组件的容器
-                LinearLayout container = findViewById(R.id.main_line);
-
-
 
                 if (editTextContent.isEmpty()){
-
                     Log.d("TAG","报错:输入为空");
-                    alertDialog2.show();
-
+                    error_null.show();
                 }else {
-
                     // 使用正则表达式检查输入是否只包含数字和小数点
                     if (editTextContent.matches("[0-9.]+")) {
-                        // 将字符串转换为 double 类型
-                        double editTextValue = 0;
-
-                        try {
-                            editTextValue = Double.parseDouble(editTextContent);
-                            // 在这里处理转换成功的情况
-
-
-                        } catch (NumberFormatException e) {
-                            // 在这里处理转换失败的情况，即输入不是有效的数字或小数
-                            Log.d("TAG", "报错:输入不是有效的数字或小数");
-                        }
-
-//                        转换为小数
-                        double textViewValue = Double.parseDouble(textViewContent);
-                        // 计算总和
-                        double sum = editTextValue + textViewValue;
-
-
                         // 获取当前时间日期
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                         String currentDateAndTime = sdf.format(new Date());
-
                         // 构建要显示的文本内容，包括计算结果和时间日期
                         String displayText = "\n时间日期：" + currentDateAndTime;
-
-
-                        // 分类显示
-                        String sort = "分类: 待添加 ";
-
-                        // 将结果显示在 TextView 中
-                        text_num.setText(String.valueOf(sum));
-
                         // 清空文本框内容
                         edit_text.setText("");
-                        //        获取SharedPreferences对象
+                        //获取SharedPreferences对象
                         SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
-                        //        获取SharedPreferences的编辑对象
+                        //获取SharedPreferences的编辑对象
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         int Data_size = sharedPreferences.getAll().size();
-                        String key = "text" + String.valueOf(Data_size+1);
-                        Map<String, String> dataMap = parseStringToMap(sharedPreferences.getAll().toString());
-//                        DataMap只输出了Values
-                        System.out.println(dataMap.values() + "size:" + dataMap.size());
-
-
-
-
-                        Log.e("Data_All",sharedPreferences.getAll().toString());
-//                        存储到Map
-                        Log.e("Data_序号",key);
-//                        保存数据
+                        String key = String.valueOf(Data_size+1);
                         editor.putString(key,editTextContent);
                         editor.apply();
-//                        调用数据
-//                        BUG:读取失败
-                        //        测试
-                        //                        defValue在读取失败的情况下返回
-                        String text = sharedPreferences.getString("text", "default");
-                        Log.e("TAG",text);
-                        // 设置点击按钮后要添加的内容
-//                        textView.setText(String.format("%s   %s", editTextContent, sort));
-                        TextView textView = new TextView(AddActivity.this);
-                        textView.setText(text);
-                        textView.setTextSize(30);
-                        container.addView(textView);
-                        // 创建一个新的 TextView 来显示额外的数据（时间日期）
-                        TextView extraTextView = new TextView(AddActivity.this);
-                        extraTextView.setText(displayText); // 设置额外数据为时间日期
-                        extraTextView.setTextSize(20); // 设置文本大小
-                        container.addView(extraTextView); // 将 TextView 添加到容器中
-
+                        // 总和显示
+                        text_num.setText(String.valueOf(calculateMapSum()));
+                        ShowContainer();
                     }else {
                         Log.d("TAG", "报错: 输入包含非法字符");
-                        // 目前存在很多代码复用问题，之后写成工具类然后方便调用保持整洁和高效
                         // 弹窗
-                        alertDialog1.show();
+                        error_rule.show();
                         // 清空文本框内容
                         edit_text.setText("");
                     }
@@ -203,9 +115,15 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
-
-
-//      END
+        btn_clr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //        读取数据添加到容器里
+                SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
+                sharedPreferences.edit().clear().apply();
+                ShowContainer();
+            }
+        });
     }
 
     public static Map<String, String> parseStringToMap(String input) {
@@ -226,6 +144,49 @@ public class AddActivity extends AppCompatActivity {
         }
         return map;
     }
+
+//    BUG 需要排序
+    public void ShowContainer(){
+        //        读取数据添加到容器里
+        SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
+        //        获取SharedPreferences的编辑对象
+        Map<String, String> dataMap = parseStringToMap(sharedPreferences.getAll().toString());
+//                        DataMap只输出了Values
+        System.out.println(dataMap.values() + "size:" + dataMap.size());
+        // 获取要添加的组件的容器
+        LinearLayout container = findViewById(R.id.main_line);
+        container.removeAllViews();
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+//            创建TextView
+            TextView textView = new TextView(AddActivity.this);
+            textView.setText(entry.getValue());
+            textView.setTextSize(30);
+//            清除容器中的所有视图
+            container.addView(textView);
+        }
+    }
+
+
+
+    //    计算总和
+    public Double calculateMapSum(){
+        Double sum = 0.0;
+        //        读取数据添加到容器里
+        SharedPreferences sharedPreferences = getSharedPreferences("my_data", MODE_PRIVATE);
+        //        获取SharedPreferences的编辑对象
+        Map<String, String> dataMap = parseStringToMap(sharedPreferences.getAll().toString());
+        // 获取要添加的组件的容器
+        LinearLayout container = findViewById(R.id.main_line);
+        container.removeAllViews();
+        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            sum += Double.parseDouble(entry.getValue());
+        }
+        return sum;
+    }
+
+
 
 
 }

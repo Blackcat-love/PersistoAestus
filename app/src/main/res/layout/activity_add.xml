@@ -91,4 +91,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/btn_clr"
+        android:layout_width="64dp"
+        android:layout_height="50dp"
+        android:text="c"
+        tools:layout_editor_absoluteX="346dp"
+        tools:layout_editor_absoluteY="133dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
