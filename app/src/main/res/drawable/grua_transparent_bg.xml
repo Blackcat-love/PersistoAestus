@@ -1,0 +1,9 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap android:src="@drawable/gura"
+            android:gravity="center" />
+    </item>
+    <item>
+        <color android:color="#90000000" />
+    </item>
+</layer-list>

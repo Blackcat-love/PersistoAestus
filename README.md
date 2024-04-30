@@ -14,6 +14,7 @@
 1.0.0 基础记账 实现了添加数据自动计算和保存记账记录 <br/>
 1.0.1 详细记账 添加时显示时间和分类 <br/>
 1.0.2 美观的加载画面 Titanic for Android  <br/>
+1.0.3 本地保存数据 <br/>
 
 ### 鸣谢
 https://github.com/RomainPiel/Titanic
@@ -21,6 +22,7 @@ https://github.com/RomainPiel/Titanic
 ## Bug
 1.0.0 打包APK后，实际测试中，无法正常使用ScrollView滚动条，但在模拟测试中却可以。 已解决：但啥都没干，再次运行的时候莫名其妙好了（流汗黄豆）<br/>
 1.0.1 代码结构太乱。 待解决<br/>
+1.0.2 代码过多重复,读取数据后无法实时添加数据 待解决<br/>
 
 
 ### 赞助
