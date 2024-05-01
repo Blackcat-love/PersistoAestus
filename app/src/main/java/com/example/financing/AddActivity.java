@@ -156,17 +156,16 @@ public class AddActivity extends AppCompatActivity {
         // 获取要添加的组件的容器
         LinearLayout container = findViewById(R.id.main_line);
         container.removeAllViews();
-        for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-//            创建TextView
+        //        倒序
+        for (int i = dataMap.size() - 1; i >= 0; i--) {
+            //            创建TextView
             TextView textView = new TextView(AddActivity.this);
-            textView.setText(entry.getValue());
+            textView.setText(dataMap.get(String.valueOf(i+1)));
             textView.setTextSize(30);
-//            清除容器中的所有视图
             container.addView(textView);
         }
-    }
 
+    }
 
 
     //    计算总和
