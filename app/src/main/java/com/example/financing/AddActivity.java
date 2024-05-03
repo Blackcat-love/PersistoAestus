@@ -167,7 +167,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-
+//虽然目前增加了SqLite来存储数据，但是目前先不用。
     //    计算总和
     public Double calculateMapSum(){
         Double sum = 0.0;

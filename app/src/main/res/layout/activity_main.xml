@@ -28,17 +28,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/topBar"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:orientation="vertical">
 
         <!-- Add your content here -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="hello"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/grua_transparent_bg"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_insert"
+            android:text="insert"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_updata"
+            android:text="updata"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_del"
+            android:text="del"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_select"
+            android:text="select"/>
+
+
 
     </LinearLayout>
 
