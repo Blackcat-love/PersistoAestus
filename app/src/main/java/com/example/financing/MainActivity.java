@@ -1,7 +1,9 @@
 package com.example.financing;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG","insert被点击了");
                 DBOpenHelper dbOpenHelper = new DBOpenHelper(MainActivity.this, "expenditure.db", null, 1);
                 SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 //                创建存放数据的ContenValues对象
                 ContentValues values = new ContentValues();
                 values.put("amount",123);
                 values.put("category","hello Sqlite");
+                values.put("notes","一个测试用数据");
                 db.insert("expenditure",null,values);
 
 
@@ -58,6 +62,42 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_updata.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+      btn_select.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Log.e("TAG","select被点击了");
+              DBOpenHelper dbOpenHelper = new DBOpenHelper(MainActivity.this, "expenditure.db", null, 1);
+              SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+              //创建游标对象
+              Cursor cursor = db.query("expenditure", new String[]{"id","amount","category","notes"}, null, null, null, null, null);
+              while (cursor.moveToNext()){
+                  @SuppressLint("Range") String id = cursor.getString(cursor.getColumnIndex("id"));
+                  @SuppressLint("Range") String amount = cursor.getString(cursor.getColumnIndex("amount"));
+                  @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex("category"));
+                  @SuppressLint("Range") String notes = cursor.getString(cursor.getColumnIndex("notes"));
+                  String va = "result: id=" + id +" amount: " + amount +"  category:" + category + "notes" + notes;
+                  Log.i("expenditure（支出表）：",va);
+              }
+              cursor.close();
+          }
+      });
+
+
+      btn_del.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Log.e("TAG","del被点击了");
+
+          }
+      });
 
 
     }
