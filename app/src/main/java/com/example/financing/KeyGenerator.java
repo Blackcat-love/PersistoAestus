@@ -2,6 +2,7 @@ package com.example.financing;
 
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +37,25 @@ public class KeyGenerator {
     }
 
     public static String generateKey_two(String timeString){
+//        在这里可以加入时间验证来防止密钥重复 或者 通过租借服务器创建远程数据库所有被使用的密钥都将添加到数据库中，通过遍历远程数据库验证当前key有没有被使用过
+//        使用过则返回false
+//        目前先加入时间戳验证
+        // 获取当前时间
+        Date currentTime = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String time = dateFormat.format(currentTime);
+//        计算时间差
+// 获取参数时间的mm部分
+        int paramMinute = Integer.parseInt(timeString.substring(10, 12));
+// 获取当前时间的mm部分
+        int currentMinute = Integer.parseInt(time.substring(10, 12));
+        // 计算时间差
+        int minuteDiff = Math.abs(currentMinute - paramMinute);
+        if (minuteDiff <= 3) {
+            System.out.println("该密钥目前可以使用");
+        }else {
+            System.out.println("该密钥已失效");
+        }
         // 密钥加密对照表
         HashMap<Character, String> cipherTable = createCipherTable();
         // 替换时间字符串中的数字为密码表中对应的值
