@@ -1,5 +1,7 @@
 package com.example.financing;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,6 +32,18 @@ public class KeyGenerator {
             encryptedKey.append(cipher);
         }
 
+        return encryptedKey.toString();
+    }
+
+    public static String generateKey_two(String timeString){
+        // 密钥加密对照表
+        HashMap<Character, String> cipherTable = createCipherTable();
+        // 替换时间字符串中的数字为密码表中对应的值
+        StringBuilder encryptedKey = new StringBuilder();
+        for (char c : timeString.toCharArray()) {
+            String cipher = cipherTable.get(c);
+            encryptedKey.append(cipher);
+        }
         return encryptedKey.toString();
     }
 
@@ -93,6 +107,45 @@ public class KeyGenerator {
         decipherTable.put("LZ", '9');
 
         return decipherTable;
+    }
+
+
+    public static boolean Verification_key(String t_key){
+        if (t_key.isEmpty()){
+            System.out.println("为空");
+            return false;
+        }else {
+            String lock = null;
+            try {
+                lock = EncryptionUtils.encrypt(KeyGenerator.generateKey_two(KeyGenerator.decryptKey(EncryptionUtils.decrypt(t_key))));
+            } catch (Exception e) {
+                Log.e("Error","输入检测到无法识别字符");
+            }
+            if (t_key.equals(lock)){
+                System.out.println("匹配成功");
+                return true;
+            }else {
+                System.out.println("匹配失败");
+                return false;
+            }
+        }
+    }
+
+
+    public static void printKey(){
+        //        密码表测试
+        String key = KeyGenerator.generateKey();
+        Log.e("KEY",key);
+
+        String encrypt = EncryptionUtils.encrypt(key);
+        Log.e("加密Key",encrypt);
+
+        String decrypt = EncryptionUtils.decrypt(encrypt);
+        Log.e("解密",decrypt);
+
+        String key_decrypt = KeyGenerator.decryptKey(decrypt);
+        Log.e("源key",key_decrypt);
+//        密码表测试END
     }
 
 

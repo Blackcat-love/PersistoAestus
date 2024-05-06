@@ -1,14 +1,18 @@
 package com.example.financing;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,26 +29,17 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
-//        密码表测试
-        String key = KeyGenerator.generateKey();
-        Log.e("KEY",key);
-
-        String encrypt = EncryptionUtils.encrypt(key);
-        Log.e("加密Key",encrypt);
-
-        String decrypt = EncryptionUtils.decrypt(encrypt);
-        Log.e("解密",decrypt);
-
-        String key_decrypt = KeyGenerator.decryptKey(decrypt);
-        Log.e("源key",key_decrypt);
-
-
-//        密码表测试END
-
-
-
-
+        //        创建弹窗
+        AlertDialog success_key = new AlertDialog.Builder(this)
+                .setTitle("提示")//标题
+                .setMessage("成功验证key")//内容
+                .setIcon(R.mipmap.ic_launcher)//图标
+                .create();
+        AlertDialog error_key = new AlertDialog.Builder(this)
+                .setTitle("提示")//标题
+                .setMessage("key失效")//内容
+                .setIcon(R.mipmap.ic_launcher)//图标
+                .create();
 
 
 //        获取jump按钮
@@ -57,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         Button btn_select = findViewById(R.id.btn_select);
 //        获得del按钮
         Button btn_del = findViewById(R.id.btn_del);
+//        获得btn_key按钮
+        Button btn_key = findViewById(R.id.btn_key);
+//        获得text_key文本框
+        EditText text_key = findViewById(R.id.text_key);
+
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +118,21 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onClick(View v) {
               Log.e("TAG","del被点击了");
+
+          }
+      });
+
+//      获取key按钮
+      btn_key.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              String t_key = text_key.getText().toString();
+              KeyGenerator.printKey();
+              if (KeyGenerator.Verification_key(t_key)){
+                  success_key.show();
+              }else {
+                  error_key.show();;
+              }
 
           }
       });
