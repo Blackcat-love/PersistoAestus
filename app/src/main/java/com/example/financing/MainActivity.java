@@ -15,6 +15,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -23,6 +24,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+
+//        密码表测试
+        String key = KeyGenerator.generateKey();
+        Log.e("KEY",key);
+
+        String encrypt = EncryptionUtils.encrypt(key);
+        Log.e("加密Key",encrypt);
+
+        String decrypt = EncryptionUtils.decrypt(encrypt);
+        Log.e("解密",decrypt);
+
+        String key_decrypt = KeyGenerator.decryptKey(decrypt);
+        Log.e("源key",key_decrypt);
+
+
+//        密码表测试END
+
+
+
+
+
 
 //        获取jump按钮
         ImageView junp = findViewById(R.id.btn_jump);
