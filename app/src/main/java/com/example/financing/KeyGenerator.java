@@ -1,12 +1,11 @@
 package com.example.financing;
 
 import android.util.Log;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class KeyGenerator {
 
@@ -87,6 +86,11 @@ public class KeyGenerator {
     }
 
     public static String decryptKey(String encryptedKey) {
+//        解决调用length后程序报错空指针异常
+        if (encryptedKey == null || encryptedKey.isEmpty()) {
+            return "error"; // 或者 throw new IllegalArgumentException("encryptedKey cannot be null or empty");
+        }
+
         // 密钥解密对照表
         HashMap<String, Character> decipherTable = createDecipherTable();
 
@@ -135,9 +139,11 @@ public class KeyGenerator {
             System.out.println("为空");
             return false;
         }else {
-            String lock = null;
+            String lock = "error";
             try {
-                lock = EncryptionUtils.encrypt(KeyGenerator.generateKey_two(KeyGenerator.decryptKey(EncryptionUtils.decrypt(t_key))));
+                lock = EncryptionUtils.encrypt(KeyGenerator.generateKey_two(KeyGenerator.decryptKey(
+                        Objects.requireNonNull(EncryptionUtils.decrypt(t_key))
+                )));
             } catch (Exception e) {
                 Log.e("Error","输入检测到无法识别字符");
             }

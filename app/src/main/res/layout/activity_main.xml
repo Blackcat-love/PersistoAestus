@@ -75,6 +75,12 @@
             android:shadowDy="1"
             android:shadowRadius="1"
             android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/key_show"
+            android:text="Error"
+            android:textColor="#FF0000"/>
 
 
 
