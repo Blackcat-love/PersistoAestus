@@ -54,8 +54,10 @@ public class MainActivity extends AppCompatActivity {
         Button btn_del = findViewById(R.id.btn_del);
 //        获得btn_key按钮
         Button btn_key = findViewById(R.id.btn_key);
-//        获得text_key文本框
+//        获得text_key输入框
         EditText text_key = findViewById(R.id.text_key);
+//        获得text_del输入框
+        EditText text_del = findViewById(R.id.text_del);
 
 
         btn_insert.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 values.put("category","hello Sqlite");
                 values.put("notes","一个测试用数据");
                 db.insert("expenditure",null,values);
-
-
             }
         });
 
@@ -89,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
         btn_updata.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG","upDate被点击了");
+                DBOpenHelper dbOpenHelper = new DBOpenHelper(MainActivity.this, "expenditure.db", null, 1);
+                SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+                //创建游标对象
+                ContentValues values = new ContentValues();
+                values.put("category","这个内容被替换了！");
+                db.update("expenditure",values,"id=?",new String[]{"2"});
 
             }
         });
@@ -118,6 +125,16 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public void onClick(View v) {
               Log.e("TAG","del被点击了");
+              DBOpenHelper dbOpenHelper = new DBOpenHelper(MainActivity.this, "expenditure.db", null, 1);
+              SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+              String text = text_del.getText().toString();
+              if (text.isEmpty()){
+                  System.out.println("无值");
+              }else {
+                  //创建游标对象
+                  db.delete("expenditure","id=?",new String[]{text});
+              }
+
 
           }
       });
